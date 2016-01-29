@@ -142,7 +142,7 @@ function login () {
 }
 
 var encodings = {
-  spa: "windows-1252",
+  ell: "windows-1252",
   eng: "ascii"
 };
 
