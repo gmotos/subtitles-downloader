@@ -22,19 +22,20 @@ var mix = program.mix;
 
 co(function* () {
   try {
+	filePattern = filePattern.replace(/([\[\]])/g,"[$1]");
     var files = yield glob(filePattern);
     if (files.length === 0) {
       error("No matching files");
       return;
     }
-    for (var file of files.values()) {
+    for (var file of files) {
       var options = {
         languages: langs,
         mix: mix,
         filepath: file
       };
       var results = yield subtitlesDownloader.downloadSubtitles(options);
-      for (var result of results.values()) {
+      for (var result of results) {
         var baseFile = path.basename(file);
         if (result.path) {
           info("Downloaded - " + baseFile + " - " + result.lang);
@@ -46,7 +47,7 @@ co(function* () {
   } catch (err) {
     error(err);
   }
-})();
+});
 
 function error(msg) {
   console.error(chalk.red("[error]") + " - " + msg);
